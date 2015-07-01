@@ -1,0 +1,21 @@
+shinyUI(fluidPage(
+  sidebarPanel(fileInput('file1', 'Upload CSV pulled from Agent Stats',
+                         accept=c('text/csv', 
+                                  'text/comma-separated-values,text/plain', 
+                                  '.csv')),
+               hr(),
+               htmlOutput("contents2"),
+               htmlOutput("contents3"),
+               hr(),
+               htmlOutput("contents5"),
+               htmlOutput("contents6"),
+               htmlOutput("contents7"),
+               htmlOutput("contents9")
+  ),
+  mainPanel(
+    htmlOutput("helptext"),
+    plotOutput("plot1"),
+    dataTableOutput("contents4")
+  )
+)
+)
