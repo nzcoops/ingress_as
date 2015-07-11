@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   ),
   mainPanel(
     htmlOutput("helptext"),
-    plotOutput("plot1"),
+    htmlOutput("plot1"),
     dataTableOutput("contents4")
   )
 )

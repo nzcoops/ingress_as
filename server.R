@@ -1,6 +1,7 @@
 require(shiny)
 require(ggplot2)
 require(scales)
+require(googleVis)
 theme_set(theme_gray(base_size = 18))
 
 shinyServer (function(input, output, session) {
@@ -10,7 +11,8 @@ shinyServer (function(input, output, session) {
     if (is.null(inFile))
       return(NULL)
     dat <<- read.csv(inFile$datapath)
-    dat[,2:21] <<- lapply(dat[,2:21],function(x){as.numeric(gsub(",", "", x))})
+    dat <<- dat[,-1]
+    dat[,2:(ncol(dat)-1)] <<- lapply(dat[,2:(ncol(dat)-1)],function(x){as.numeric(gsub(",", "", x))})
     names(dat)
   })
   
@@ -93,19 +95,22 @@ shinyServer (function(input, output, session) {
     dat_dt()
   }, options = list(paging = FALSE, searching = FALSE))
   
-  output$plot1 <- renderPlot({
+  output$plot1 <- renderGvis({
     if (is.null(input$file1))
       return(NULL)
     if(input$newvar == T && input$newvarY == T) {
-      p <- ggplot(dat_dt(), aes_string(x=dat_dt()[input$columnsx], y=dat_dt()["MyVar"])) +
-        labs(x=input$columnsx, y="MyVar") +
-        geom_point() + scale_x_continuous(labels = comma) + scale_y_continuous(labels = comma)
-      print(p)
+#       p <- ggplot(dat_dt(), aes_string(x=dat_dt()[input$columnsx], y=dat_dt()["MyVar"])) +
+#         labs(x=input$columnsx, y="MyVar") +
+#         geom_point() + scale_x_continuous(labels = comma) + scale_y_continuous(labels = comma)
+#       print(p)
+      gvisScatterChart(dat[,c(input$columnsx,input$columnsy)])
+      
     } else {
-      p <- ggplot(dat, aes_string(x=dat[input$columnsx], y=dat[input$columnsy])) +
-        labs(x=input$columnsx, y=input$columnsy) +
-        geom_point() + scale_x_continuous(labels = comma) + scale_y_continuous(labels = comma)
-      print(p)
+#       p <- ggplot(dat, aes_string(x=dat[input$columnsx], y=dat[input$columnsy])) +
+#         labs(x=input$columnsx, y=input$columnsy) +
+#         geom_point() + scale_x_continuous(labels = comma) + scale_y_continuous(labels = comma)
+#       print(p)
+      gvisScatterChart(dat[,c(input$columnsx,input$columnsy)])
     }
   })
 }

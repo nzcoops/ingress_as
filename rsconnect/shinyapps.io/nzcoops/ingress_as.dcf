@@ -1,8 +1,8 @@
 name: ingress_as
 account: nzcoops
 server: shinyapps.io
-bundleId: 213838
+bundleId: 213858
 url: https://nzcoops.shinyapps.io/ingress_as
-when: 1435722137.46844
+when: 1435728604.37683
 asMultiple: FALSE
 asStatic: FALSE
